@@ -1,0 +1,26 @@
+package Libraryhiber.maven;
+
+import java.util.Scanner;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+
+public class Retrieve {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		SessionFactory sessionFactory=libraryman.provideSessionfactory();
+		Session session=sessionFactory.openSession();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the Book id to search:");
+		int book_id=sc.nextInt();
+		books b=session.get(books.class, book_id);
+		if(b!=null) {
+			System.out.printf("BOOK ID: %d\nBOOK NAME: %s\nAUTHOR NAME: %s\nPRICE:%.2f",b.getBookid(),b.getBook_name(),b.getAuthor_name(),b.getPrice());
+		}else {
+			System.out.println("NOT FOUND");
+		}
+		sessionFactory.close();
+	}
+
+}
