@@ -1,0 +1,31 @@
+package Libraryhiber.maven;
+
+import java.util.Scanner;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+public class Delete {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		SessionFactory sessionFactory=libraryman.provideSessionfactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the Book id to delete:");
+		int book_id=sc.nextInt();
+		books b=session.get(books.class, book_id);
+		if(b!=null) {
+			session.delete(b);
+			System.out.println("Deleted Successfully");
+		}else {
+			System.out.println("Unable to delete");
+		}
+		t.commit();
+		session.close();
+	}
+
+}
+
