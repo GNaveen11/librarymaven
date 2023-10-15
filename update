@@ -1,0 +1,40 @@
+package Libraryhiber.maven;
+
+import java.util.Scanner;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+
+public class Update {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		SessionFactory sessionFactory=libraryman.provideSessionfactory();
+		Session session=sessionFactory.openSession();
+		Transaction t=session.beginTransaction();
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter the Book id to update:");
+		int book_id=sc.nextInt();
+		books b=session.get(books.class, book_id);
+		if(b!=null) {
+			System.out.println("Enter Updated book name:");
+			String book_name=sc.next();
+			b.setBook_name(book_name);
+			System.out.println("Enter Updated Author name:");
+			String author_name=sc.next();
+			b.setAuthor_name(author_name);
+			System.out.println("Enter the Updated Price:");
+			float price=sc.nextFloat();
+			b.setPrice(price);
+			
+			session.update(b);
+			t.commit();
+			System.out.println("Updated Succesfully");
+		}else {
+			System.out.println("Cannot be Updated");
+		}
+		System.out.printf("BOOK ID: %d\nBOOK NAME: %s\nAUTHOR NAME: %s\nPRICE:%.2f",b.getBookid(),b.getBook_name(),b.getAuthor_name(),b.getPrice());
+		sessionFactory.close();
+	}
+	}
